@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Dirt.Collections.Tests/Dirt.Collections.Tests.csproj" />
+  <Project Path="Dirt.Collections/Dirt.Collections.csproj" />
+</Solution>

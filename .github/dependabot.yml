@@ -1,0 +1,46 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: "nuget" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "rhysparry"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    groups:
+      test-dependencies:
+        patterns:
+          - Microsoft.NET.Test.Sdk
+          - xunit.v3
+          - xunit.runner.visualstudio
+          - coverlet.collector
+  - package-ecosystem: "github-actions" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "rhysparry"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+  - package-ecosystem: "dotnet-sdk"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
+    assignees:
+      - "rhysparry"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
