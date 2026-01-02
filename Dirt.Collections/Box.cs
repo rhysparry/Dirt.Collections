@@ -6,7 +6,7 @@ namespace Dirt.Collections;
 /// A Box provides a container for a single value. The box can also be empty.
 /// </summary>
 /// <typeparam name="T">The type of the value stored in the box.</typeparam>
-public sealed class Box<T> : IBox<T>, IReadOnlyBox<T>
+public sealed class Box<T> : IBox<T>, IReadOnlyBox<T>, IEquatable<IReadOnlyBox<T>>
     where T : notnull
 {
     /// <summary>
@@ -76,6 +76,30 @@ public sealed class Box<T> : IBox<T>, IReadOnlyBox<T>
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
+    }
+
+    public bool Equals(IReadOnlyBox<T>? other)
+    {
+        if (other is null)
+            return false;
+
+        if (other.IsEmpty && IsEmpty)
+            return true;
+
+        if (other.IsEmpty || IsEmpty)
+            return false;
+
+        return EqualityComparer<T>.Default.Equals(Contents, other[0]);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is IReadOnlyBox<T> other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return IsEmpty ? 0 : EqualityComparer<T>.Default.GetHashCode(Contents);
     }
 }
 
