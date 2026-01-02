@@ -1,4 +1,5 @@
 using System.Collections;
+using Dirt.Collections.Immutable;
 
 namespace Dirt.Collections.Tests;
 
@@ -151,5 +152,35 @@ public class BoxTests
         {
             box.SetContents(null!);
         });
+    }
+
+    [Fact]
+    public void TwoEmptyBoxes_Equal_True()
+    {
+        var box_one = Empty.Box<string>();
+        var box_two = Empty.Box<string>();
+
+        Assert.True(box_one.Equals(box_two));
+        Assert.Equal(box_one.GetHashCode(), box_two.GetHashCode());
+    }
+
+    [Fact]
+    public void SameContents_Equal_True()
+    {
+        var box_one = new Box<string>("initial value");
+        var box_two = new Box<string>("initial value");
+
+        Assert.True(box_one.Equals(box_two));
+        Assert.Equal(box_one.GetHashCode(), box_two.GetHashCode());
+    }
+
+    [Fact]
+    public void DifferentContents_Equal_False()
+    {
+        var box_one = new Box<string>("initial value");
+        var box_two = new Box<string>("initial value 2");
+
+        Assert.False(box_one.Equals(box_two));
+        Assert.NotEqual(box_one.GetHashCode(), box_two.GetHashCode());
     }
 }
